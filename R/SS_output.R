@@ -43,8 +43,55 @@
 #' @param NoCompOK Allow the function to work without a CompReport file.
 #' @param aalmaxbinrange The largest length bin range allowed for composition
 #' data to be considered as conditional age-at-length data.
-#' @return Many values are returned. Complete list would be quite long, but
-#' should probably be created at some point in the future.
+#' @return Many values are returned in a list. 
+#' Some of the lists items are described below. The first word of the description
+#' is the 'KeyWord' used by Stock Synthesis in the \code{Report.sso} file.
+#' The list elements described below are placed in alphabetical order.
+#' A more complete list is needed in the future as well as documenting 
+#' how each element is generated in the \code{.tpl} files.
+#' \item{endgrowth}{BIOLOGY Biology_at_age_in_endyr_with_ - A data frame
+#' of the biology at age in the final year based on some form of variance
+#' set within Stock Synthesis. The data frame contains the following, where each bullet
+#' is a column name. Pseudo code comes from Stock Synthesis.
+#' \itemize{
+#' \item{Seas - Season}
+#' \item{Morph - Growth morph}
+#' \item{Bio_Pattern - }
+#' \item{Sex - Sex or gender}
+#' \item{Settlement - }
+#' \item{Platoon - }
+#' \item{int_Age - Age}
+#' \item{Real_Age - Real age as defined by \code{real_age(g, ALK_idx, a)}}
+#' \item{Age_Beg - Calendar age as defined by \code{calen_age(g, ALK_idx,a)}}
+#' \item{Age_Mid - Some other age as defined by \code{calen_age(g, ALK_idx_mid, a)}}
+#' \item{M - Natural mortality}
+#' \item{Len_Beg - Average size}
+#' \item{Len_Mid - Average size at mid season as defined by 
+#' \code{Ave_Size(t, mid_subseas, g, a)}}
+#' \item{SD_Beg - \code{Sd_Size_within(ALK_idx,g,a)}}
+#' \item{SD_Mid - \code{Sd_Size_within(ALK_idx_mid,g,a)}}
+#' \item{Wt_Beg - \code{Wt_Age_beg(s,g,a)}}
+#' \item{Wt_Mid - \code{Wt_Age_mid(s,g,a)}}
+#' \item{Len_Mat - \code{ALK(ALK_idx,g,a)*mat_len(GP4(g))}}
+#' \item{Age_Mat - If \code{Maturity_Option <= 2)} 
+#' then \code{SS2out<<mat_age(GP4(g),a)},
+#' \code{Maturity_Option > 2 & sx(g) ==1 && Maturity_Option < 5)} 
+#' then \code{Age_Maturity(GP4(g),a)}, or
+#' \code{else} then \code{-1.0}}
+#' \item{Mat*Fecund - \code{fec(g,a)}}
+#' \item{Mat_F_wtatage - \code{make_mature_bio(g,a)}}
+#' \item{Mat_F_Natage - \code{make_mature_numbers(g,a)}}
+#' \item{Herma_Trans - Optional column if \code{Hermaphro_Option!=0},
+#' \code{Herma_Cum*=(1.0-Hermaphro_val(GP4(g),a-1))} if \code{a > 1}.}
+#' \item{Herma_Cum - Optional column if \code{Hermaphro_Option!=0},
+#' \code{Hermaphro_val(GP4(g),a)}.}
+#' \item{Len:_ - Information for each fleet as defined by the trailing number.}
+#' \item{SelWt:_ - Information for each fleet as defined by the trailing number.}
+#' \item{RetWt:_ - Information for each fleet as defined by the trailing number.}  
+#' }}
+#' \item{likelihoods_by_fleet}{LIKELIHOOD - Fleet-specific components of 
+#' the likelihood.}
+#' \item{likelihoods_used}{LIKELIHOOD - Each component of the likelihood.}
 #' @author Ian Stewart, Ian Taylor
 #' @export
 #' @seealso \code{\link{SS_plots}}
